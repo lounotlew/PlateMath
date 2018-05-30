@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% block content %}
+    {%  if current_user.is_authenticated %}
+
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>{{ current_user.first_name }}'s Weekly Workout Schedule</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+
+    {% for schedule in schedules %}
+
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>{{ schedule.day_of_week }}: {{ schedule.workout }}</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+          <small class="text-muted"><a href="">link</a></small>
+        </div>
+      </article>
+
+    {% endfor %}
+
+
+
+    {% else %}
+
+    <h2>Workout </h2>
+
+    {% endif %}
+
+{% endblock content %}
+
+{% block content1 %}
+
+    <div class="col-md-4">
+        <div class="content-section1">
+         {%  if current_user.is_authenticated %}
+         <h3>{{ current_user.first_name }}'s Workouts.</h3>
+         <p class='text-muted'>Description.
+            <ul class="list-group">
+              <a href="" class="button3">
+              	<span>Set a Workout Day</span></a>
+              <a href="" class="button3">
+                <span>View Your Schedule</span></a>
+              <a href="" class="button3">
+                <span></span></a>
+              <a href="" class="button3">
+              	<span>Exercise Database</span></a>
+         {% else %}
+          <h3>Your Nutrition, Simplified.</h3>
+          <p class='text-muted'>Easily log and track your nutritional data so you can maximize your workouts and ....
+            <ul class="list-group">
+              <a href="{{ url_for('set_macros') }}" class="button3">
+                <span>Set Macros</span></a>
+              <a href="{{ url_for('new_meal1') }}" class="button3">
+                <span>Add a Meal</span></a>
+              <a href="{{ url_for('meal_log') }}" class="button3">
+                <span>Meal Log</span></a>
+              <a href="{{ url_for('nutrition_resources') }}" class="button3">
+                <span>Resources</span></a>
+          {% endif %}
+            </ul>
+         </p>
+        </div>
+    </div>
+
+{% endblock content1 %}

@@ -1,0 +1,190 @@
+{% extends "layout.html" %}
+{% block content %}
+    {%  if current_user.is_authenticated %}
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>"Losing Fat and Building Muscle at the Same Time"</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <h4>Macros 101 - Understanding Macronutrients</h4>
+          </div>
+          <ul>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+            <li><p></p></li>
+          </ul>
+        </div>
+      </article>
+    {% else %}
+
+    <h2>Recs</h2>
+
+    <h5>As they say, "abs are made in the kitchen." No matter how hard and diligently work out, if your nutrition is not in place, you won't maximize your results.</h5>
+
+    <p>With PlateMath, tracking and managing your daily nutritional intake is simple, intuitive, and ADJECTIVE.</p>
+
+{% endif %}
+
+{% endblock content %}
+
+{% block content1 %}
+
+    <div class="col-md-4">
+        <div class="content-section1">
+         {%  if current_user.is_authenticated %}
+         <h3>Resources for {{ current_user.first_name }}.</h3>
+         <p class='text-muted'>Check out these articles and websites tailored to help you understand your nutrition better.
+            <ul class="list-group">
+              <a href="{{ url_for('set_macros') }}" class="button3">
+              	<span>Set Your Macros</span></a>
+              <a href="{{ url_for('nutrition') }}" class="button3">
+                <span>View Your Nutrition</span></a>
+              <a href="{{ url_for('meal_log') }}" class="button3">
+                <span>View Your Meal Log</span></a>
+              <a href="" class="button3">
+              	<span>???</span></a>
+         {% else %}
+          <h3>Your Nutrition, Simplified.</h3>
+          <p class='text-muted'>Easily log and track your nutritional data so you can maximize your workouts and ....
+            <ul class="list-group">
+              <a href="{{ url_for('set_macros') }}" class="button3">
+                <span>Set Macros</span></a>
+              <a href="{{ url_for('new_meal1') }}" class="button3">
+                <span>Add a Meal</span></a>
+              <a href="{{ url_for('meal_log') }}" class="button3">
+                <span>Meal Log</span></a>
+              <a href="{{ url_for('nutrition_resources') }}" class="button3">
+                <span>Resources</span></a>
+          {% endif %}
+            </ul>
+         </p>
+        </div>
+    </div>
+
+{% endblock content1 %}
