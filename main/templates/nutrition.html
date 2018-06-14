@@ -2,12 +2,12 @@
 {% block content %}
     {%  if current_user.is_authenticated %}
 
-    {% if macros[0].protein == -1 %}
+    {% if macros.protein == -1 %}
       <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
         <div class="media-body">
           <div class="article-metadata">
-            <h4>Your Current Daily Macros</h4>
+            <h4>Your Macros for {{ today.strftime('%B %d, %Y') }}</h4>
           </div>
           <ul>
             <li>Please <a href="{{ url_for('set_macros') }}">set your macros</a> to view this feature.</li>
@@ -47,13 +47,13 @@
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/macros.jpg') }}">
         <div class="media-body">
           <div class="article-metadata">
-            <h4>Your Current Daily Macros</h4>
+            <h4>Your Macros for {{ today.strftime('%B %d, %Y') }}</h4>
           </div>
           <ul>
-            <li><p><strong>Protein:</strong> {{ macros[0].protein }}g</p></li>
-            <li><p><strong>Carbohydrates:</strong> {{ macros[0].carbs }}g</p></li>
-            <li><p><strong>Fat:</strong> {{ macros[0].fat }}g</p></li>
-            <li><p><strong>Approximate Calories:</strong> {{ macros[0].calories }} cal.</p></li>
+            <li><p><strong>Protein:</strong> {{ macros.protein }}g</p></li>
+            <li><p><strong>Carbohydrates:</strong> {{ macros.carbs }}g</p></li>
+            <li><p><strong>Fat:</strong> {{ macros.fat }}g</p></li>
+            <li><p><strong>Approximate Calories:</strong> {{ macros.calories }} cal.</p></li>
           </ul>
           <small class="text-muted"><a href="{{ url_for('set_macros') }}">Edit My Macros</a></small>
         </div>
@@ -113,6 +113,8 @@
             <ul class="list-group">
               <a href="{{ url_for('set_macros') }}" class="button3">
               	<span>Set Your Macros</span></a>
+              <a href="{{ url_for('view_macros') }}" class="button3">
+                <span>View Your Macros</span></a>
               <a href="{{ url_for('new_meal1') }}" class="button3">
                 <span>Add a Meal</span></a>
               <a href="{{ url_for('meal_log') }}" class="button3">

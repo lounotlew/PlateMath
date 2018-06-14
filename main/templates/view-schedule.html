@@ -8,7 +8,7 @@
             <h4>{{ current_user.first_name }}'s Weekly Workout Schedule</h4>
           </div>
           <ul>
-            <li><p></p></li>
+            <li><p>Click one of the cards to view your workout schedule for that day.</p></li>
             <li><p></p></li>
             <li><p></p></li>
             <li><p></p></li>
@@ -16,16 +16,17 @@
         </div>
       </article>
 
-    {% for schedule in schedules %}
+    {% for i in range(7) %}
 
       <article class="media content-section">
         <div class="media-body">
           <div class="article-metadata">
-            <h4>{{ schedule.day_of_week }}: {{ schedule.workout }}</h4>
+            <h4><a href="{{ url_for('workouts_day', day = schedules[i].day_of_week) }}" style="color:black;">
+            {{ schedules[i].day_of_week }}: {{ schedules[i].workout }}</a></h4>
           </div>
           <ul>
-            <li><p></p></li>
-            <li><p></p></li>
+            <li><p><strong>Number of Exercises: </strong>{{ num_exercises[i] }}</p></li>
+            <li><p></p></li> 
             <li><p></p></li>
             <li><p></p></li>
           </ul>
@@ -53,12 +54,11 @@
          <h3>{{ current_user.first_name }}'s Workouts.</h3>
          <p class='text-muted'>Description.
             <ul class="list-group">
+              <a href="{{ url_for('workouts') }}" class="button3"><span>Today's Workout</span></a>
+              <a href="{{ url_for('update_workout1', today = today) }}" class="button3">
+                <span>Add an Exercise</span></a>
               <a href="" class="button3">
-              	<span>Set a Workout Day</span></a>
-              <a href="" class="button3">
-                <span>View Your Schedule</span></a>
-              <a href="" class="button3">
-                <span></span></a>
+                <span>Resources</span></a>
               <a href="" class="button3">
               	<span>Exercise Database</span></a>
          {% else %}

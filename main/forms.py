@@ -1,5 +1,5 @@
 #
-# WTForms for user registration, login, and profile creation.
+# WTForms for user registration, login, profile creation,
 # Written by Lewis Kim.
 #
 
@@ -74,20 +74,25 @@ class AddExerciseForm(FlaskForm):
         ('Thursday', 'Thursday'), ('Friday', 'Friday'), ('Saturday', 'Saturday'), ('Sunday', 'Sunday')],
         validators = [DataRequired()])
 
-    num_reps = IntegerField("Number of Sets:", validators = [DataRequired(), NumberRange(min = 0)])
-    num_sets = IntegerField("Number of Reps:", validators = [DataRequired(), NumberRange(min = 0)])
+    num_sets = IntegerField("Number of Sets:", validators = [DataRequired(), NumberRange(min = 0)])
+    num_reps = IntegerField("Number of Reps:", validators = [DataRequired(), NumberRange(min = 0)])
 
     difficulty = SelectField(u'Exercise Difficulty (Optional):', choices=[('Novice', 'Novice'), ('Beginner', 'Beginner'), ('Intermediate', 'Intermediate'),
         ('Adanced', 'Advanced'), ('Expert', 'Expert')])
 
-    submit = SubmitField("Add Exercise")
-
+    submit = SubmitField("Submit")
 
 #
 class MacroForm(FlaskForm):
+    day = SelectField(u"Day of Week:", choices = [("Monday", "Monday"), ("Tuesday", "Tuesday"), ("Wednesday", "Wednesday"),
+        ("Thursday", "Thursday"), ("Friday", "Friday"), ("Saturday", "Saturday"), ("Sunday", "Sunday")],
+        validators = [DataRequired()])
+
     protein = IntegerField("Daily Protein (g)", validators = [DataRequired(), NumberRange(min = 0)])
     carbs = IntegerField("Daily Carbohydrates (g)", validators = [DataRequired(), NumberRange(min = 0)])
     fat = IntegerField("Daily Fat (g)", validators = [DataRequired(), NumberRange(min = 0)])
+
+    set_all = BooleanField("Set Macros for All Days of the Week")
 
     submit = SubmitField("Set Macros")
 

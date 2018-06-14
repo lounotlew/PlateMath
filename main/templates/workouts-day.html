@@ -3,18 +3,18 @@
     {%  if current_user.is_authenticated %}
 
       <article class="media content-section">
-        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/workout-' + today + '.jpg') }}">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='images/workout-' + day + '.jpg') }}">
         <div class="media-body">
           <div class="article-metadata">
-            <h4>Your {{ today }} Workout.</h4>
+            <h4>Your {{ day }} Workout.</h4>
           </div>
           <ul>
-            <li><p><strong>Today's Workout: </strong>{{ workout }}</p></li>
-            <li><p><strong>Number of Exercises: </strong>{{ exercises|length }}</p></li>
+            <li><p>Today's Workout: {{ workout }}</p></li>
+            <li><p></p></li>
             <li><p></p></li>
             <li><p></p></li>
           </ul>
-          <small class="text-muted"><a href="{{ url_for('update_workout1', today = today) }}">Change</a> today's workout.</small>
+          <small class="text-muted"><a href="{{ url_for('update_workout2', day = day) }}">Change</a> today's workout.</small>
         </div>
       </article>
 
@@ -31,7 +31,7 @@
             <li><p><strong>Difficulty:</strong> {{ exercise.difficulty }}</p></li>
             <li><p></p></li>
           </ul>
-          <small class="text-muted"><a href="{{ url_for('edit_exercise1', day = today, exercise_id = exercise.id) }}">Edit</a> or 
+          <small class="text-muted"><a href="{{ url_for('edit_exercise2', day = day, exercise_id = exercise.id) }}">Edit</a> or 
             <a href="">delete</a> this exercise from today's workout.</small>
         </div>
       </article>
@@ -57,7 +57,7 @@
             <ul class="list-group">
               <a href="{{ url_for('view_schedule') }}" class="button3">
                 <span>View Your Schedule</span></a>
-              <a href="{{ url_for('add_exercise1', today = today) }}" class="button3">
+              <a href="{{ url_for('add_exercise2', day = day) }}" class="button3">
               	<span>Add an Exercise</span></a>
               <a href="" class="button3">
                 <span></span></a>

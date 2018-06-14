@@ -32,7 +32,6 @@ class User(db.Model, UserMixin):
 
     profile = db.relationship('Profile', backref = 'user', lazy = True)
 
-    macros = db.relationship('Macros', backref = 'user', lazy = True)
     meal = db.relationship('Meal', backref = 'user', lazy = True)
 
     def __repr__(self):
@@ -94,6 +93,8 @@ class Exercise(db.Model):
 #
 class Macros(db.Model):
     id = db.Column(db.Integer, unique = True, nullable = False, primary_key = True)
+
+    day = db.Column(db.String, nullable = False)
 
     # Daily macronutrient numbers the user sets.
     protein = db.Column(db.Integer, nullable = False, default = -1)

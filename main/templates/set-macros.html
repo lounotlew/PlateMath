@@ -7,6 +7,19 @@
                 <legend class = "border-bottom mb-4">Set Your Daily Macro Goals.
                 </legend>
                 <div class="form-group">
+                    {{ form.day.label(class="form-control-label") }}
+                    {% if form.day.errors %}
+                        {{ form.day(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.day.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.day(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
                     {{ form.protein.label(class="form-control-label") }}
                     {% if form.protein.errors %}
                         {{ form.protein(class="form-control form-control-lg is-invalid") }}
@@ -44,6 +57,10 @@
                     {% else %}
                         {{ form.fat(class="form-control form-control-lg") }}
                     {% endif %}
+                </div>
+                <div class="form-check">
+                    {{ form.set_all(class="form-check-input")}}
+                    {{ form.set_all.label(class="form-check-label")}}
                 </div>
             </fieldset>
             <div class = "form-group">
