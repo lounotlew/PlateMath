@@ -25,10 +25,14 @@
             {{ schedules[i].day_of_week }}: {{ schedules[i].workout }}</a></h4>
           </div>
           <ul>
+            {% if schedules[i].workout == 'None Set.' %}
+            <li><p>Please set a workout for this day to see more details.</p></li> 
+            {% else %}
             <li><p><strong>Number of Exercises: </strong>{{ num_exercises[i] }}</p></li>
             <li><p></p></li> 
             <li><p></p></li>
             <li><p></p></li>
+            {% endif %}
           </ul>
           <small class="text-muted"><a href="">link</a></small>
         </div>
@@ -55,11 +59,11 @@
          <p class='text-muted'>Description.
             <ul class="list-group">
               <a href="{{ url_for('workouts') }}" class="button3"><span>Today's Workout</span></a>
-              <a href="{{ url_for('update_workout1', today = today) }}" class="button3">
+              <a href="{{ url_for('add_exercise1', today = today) }}" class="button3">
                 <span>Add an Exercise</span></a>
               <a href="" class="button3">
                 <span>Resources</span></a>
-              <a href="" class="button3">
+              <a href="{{ url_for('exercise_db') }}" class="button3">
               	<span>Exercise Database</span></a>
          {% else %}
           <h3>Your Nutrition, Simplified.</h3>

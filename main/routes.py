@@ -134,6 +134,7 @@ def view_schedule():
     return render_template('view-schedule.html', title = 'Workout Schedules', schedules = schedules, num_exercises = num_exercises, today = today)
 
 
+# Add an exercise to today's workout.
 @app.route("/workouts/<today>/add-exercise1", methods = ['GET', 'POST'])
 @login_required
 def add_exercise1(today):
@@ -168,7 +169,7 @@ def add_exercise1(today):
     return render_template('new-exercise.html', title = "Add Exercise", form = form)
 
 
-#
+# Add an exercise to any day of the week.
 @app.route("/workouts/<day>/add-exercise2", methods = ['GET', 'POST'])
 @login_required
 def add_exercise2(day):
@@ -205,6 +206,41 @@ def add_exercise2(day):
 
 
 # Add exercise 3? from DB
+@app.route("/workouts/<exercise_name>/<difficulty>/add-exercise3")
+@login_required
+def add_exercise3(exercise_name, difficulty):
+
+    form = AddExerciseForm()
+
+    if form.validate_on_submit():
+        user_id = current_user.id
+        day = form.day.data
+        workout = Schedule.query.filter(Schedule.user_id == user_id, Schedule.day_of_week == day).first().workout
+
+        if workout == "None Set.":
+            flash("Please set a workout for that day first.", "danger")
+            return redirect(url_for('workouts'))
+
+        if form.difficulty.data == None:
+            difficulty = "None Given"
+
+        else:
+            difficulty = form.difficulty.data
+
+        exercise = Exercise(name = form.name.data, day = form.day.data, workout = workout, num_sets = form.num_sets.data,
+            num_reps = form.num_reps.data, difficulty = difficulty, user_id = user_id)
+
+        db.session.add(exercise)
+        db.session.commit()
+
+        return redirect(url_for('workouts_day', day = day))
+
+    elif request.method == 'GET':
+        form.day.data = "Monday"
+        form.name.data = exercise_name
+        form.difficulty.data = difficulty
+
+    return render_template('new-exercise.html', title = "Add Exercise", form = form)
 
 
 #
@@ -277,6 +313,36 @@ def edit_exercise2(day, exercise_id):
         form.difficulty.data = exercise.difficulty
 
     return render_template('new-exercise.html', title = "Add Exercise", form = form)
+
+
+#
+@app.route("/workouts/database")
+@login_required
+def exercise_db():
+    today = datetime.today().strftime("%A")
+
+
+    return render_template('exercise-db.html', title = "Exercise Database", today = today)
+
+
+#
+@app.route("/workouts/database/legs1")
+@login_required
+def exercise_db_legs1():
+    today = datetime.today().strftime("%A")
+
+
+    return render_template('exercise-db-legs1.html', title = "Exercise Database: Legs", today = today)
+
+
+#
+@app.route("/workouts/database/legs2")
+@login_required
+def exercise_db_legs2():
+    today = datetime.today().strftime("%A")
+
+
+    return render_template('exercise-db-legs2.html', title = "Exercise Database: Legs", today = today)
 
 ### Routes and functions to do with the nutrition page. ###
 
