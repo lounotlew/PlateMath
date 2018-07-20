@@ -27,7 +27,7 @@ Then, go your [local IP address](http://127.0.0.1:5000) (http://127.0.0.1:5000).
 
 ### References
 
-References to the libraries and packages used in Dollars:
+References to the libraries and packages used in PlateMath:
 
 1) ``Flask``: http://flask.pocoo.org/
 2) ``SQLAlchemy``: http://docs.sqlalchemy.org/en/latest/intro.html
