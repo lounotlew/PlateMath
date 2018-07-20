@@ -1,19 +1,22 @@
-#
-#
-#
-#
+######################################################################################################
+# Database models for PlateMath users using SQLAlchemy.                                              #
+# Models for user data, user fitness profile data, user workout schedule data, user exercises data,  #
+# and user nutritional data (macros and meals).                                                      #
+#                                                                                                    #
+# Written by Lewis Kim.                                                                              #
+######################################################################################################
 
 from datetime import datetime
 from main import db, login_manager
 from flask_login import UserMixin
 
-#
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-#
+# A SQLAlchemy Model instance for user data.
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
 
@@ -35,10 +38,10 @@ class User(db.Model, UserMixin):
     meal = db.relationship('Meal', backref = 'user', lazy = True)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.profile_image}')"
+        return f"User('{self.username}', '{self.email}', '{self.profile_image}', '{self.date_joined}')"
 
 
-#
+# A SQLAlchemy Model instance for user fitness profile data.
 class Profile(db.Model):
     id = db.Column(db.Integer, unique = True, nullable = False, primary_key = True)
 
@@ -57,10 +60,10 @@ class Profile(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 
     def __repr__(self):
-        return f"Profile('{self.weight}', '{self.height}', '{self.goal}', '{self.age}', '{self.gender}')"
+        return f"Profile('{self.user_id}', '{self.weight}', '{self.height}', '{self.goal}', '{self.age}', '{self.gender}')"
 
 
-#
+# A SQLAlchemy Model instance for user workout schedule data.
 class Schedule(db.Model):
     id = db.Column(db.Integer, unique = True, nullable = False, primary_key = True)
 
@@ -69,8 +72,10 @@ class Schedule(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 
+    def __repr__(self):
+        return f"Schedule('{self.user_id}', '{self.day_of_week}', '{self.workout}')"
 
-#
+# A SQLAlchemy Model instance for user exercise data.
 class Exercise(db.Model):
     id = db.Column(db.Integer, unique = True, nullable = False, primary_key = True)
 
@@ -87,10 +92,10 @@ class Exercise(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 
     def __repr__(self):
-        return f"Exercise({self.name}', '{self.day}', '{self.workout}', '{self.num_sets}', '{self.num_reps}')"
+        return f"Exercise('{self.user_id}', '{self.name}', '{self.day}', '{self.workout}', '{self.num_sets}', '{self.num_reps}', '{self.difficulty}')"
 
 
-#
+# A SQLAlchemy Model instance for user nutritional macros data.
 class Macros(db.Model):
     id = db.Column(db.Integer, unique = True, nullable = False, primary_key = True)
 
@@ -109,7 +114,7 @@ class Macros(db.Model):
         return f"Nutrition({self.user_id}', '{self.protein}', '{self.carbs}', '{self.fat}', '{self.calories}')"
 
 
-#
+# A SQLAlchemy Model instance for user nutritional meal data.
 class Meal(db.Model):
     id = db.Column(db.Integer, unique = True, nullable = False, primary_key = True)
 
@@ -128,5 +133,5 @@ class Meal(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 
     def __repr__(self):
-        return f"Meal({self.description}', '{self.time}', '{self.protein}', '{self.carbs}', '{self.fat}', '{self.calories}')"
+        return f"Meal('{self.user_id}', '{self.description}', '{self.time}', '{self.protein}', '{self.carbs}', '{self.fat}', '{self.calories}')"
 

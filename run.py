@@ -1,7 +1,6 @@
-#
-#
-#
-#
+###########################
+# Run the main Flask app. #
+###########################
 
 from main import app
 

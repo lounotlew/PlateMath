@@ -1,7 +1,9 @@
-#
-#
-#
-#
+########################################################
+# Routes for PlateMath, and backend functions/methods. #
+#                                                      #
+# Written by Lewis Kim.                                #
+########################################################
+
 import os
 import operator
 import secrets
@@ -26,7 +28,9 @@ def home():
     return render_template('home.html')
 
 
-# Route to the user's fitness page.
+### Routes and functions to do with the fitness page. ###
+
+# Route to the user's main fitness page.
 @app.route("/my-fitness-page", methods = ['GET', 'POST'])
 def fitness_page():
     return render_template('fitness-page.html', title = 'My Fitness Page')
@@ -34,7 +38,7 @@ def fitness_page():
 
 ### Routes and functions to do with the workouts page. ###
 
-#
+# Route to the user's main workouts page.
 @app.route("/workouts")
 def workouts():
 
@@ -49,8 +53,7 @@ def workouts():
         return redirect(url_for('home'))
 
 
-
-#
+# Route to the user's workouts page for selected DAY of week.
 @app.route("/workouts/<day>")
 @login_required
 def workouts_day(day):
@@ -60,7 +63,7 @@ def workouts_day(day):
     return render_template("workouts-day.html", title = "Daily Workout", day = day, workout = workout, exercises = exercises)
 
 
-#
+# Route to a WTForms instance to edit a workout for TODAY (by datetime).
 @app.route("/workouts/<today>/update-workout1", methods = ['GET', 'POST'])
 @login_required
 def update_workout1(today):
@@ -88,7 +91,7 @@ def update_workout1(today):
     return render_template('change-workout.html', title = "Change Workout", form = form)
 
 
-#
+# Route to a WTForms instance to edit a workout for a selected DAY.
 @app.route("/workouts/<day>/update-workout2", methods = ['GET', 'POST'])
 @login_required
 def update_workout2(day):
@@ -116,7 +119,7 @@ def update_workout2(day):
     return render_template('change-workout.html', title = "Change Workout", form = form)
 
 
-#
+# Route to view the workouts schedule for the entire week. Not unique to different weeks.
 @app.route("/workouts/view-schedule")
 def view_schedule():
 
@@ -134,7 +137,7 @@ def view_schedule():
     return render_template('view-schedule.html', title = 'Workout Schedules', schedules = schedules, num_exercises = num_exercises, today = today)
 
 
-# Add an exercise to today's workout.
+# Route to a WTForms instance to add an exercise to TODAY's workout (by datetime).
 @app.route("/workouts/<today>/add-exercise1", methods = ['GET', 'POST'])
 @login_required
 def add_exercise1(today):
@@ -169,7 +172,7 @@ def add_exercise1(today):
     return render_template('new-exercise.html', title = "Add Exercise", form = form)
 
 
-# Add an exercise to any day of the week.
+# Route to a WTForms instance to add an exercise to the selected DAY's workout.
 @app.route("/workouts/<day>/add-exercise2", methods = ['GET', 'POST'])
 @login_required
 def add_exercise2(day):
@@ -205,7 +208,7 @@ def add_exercise2(day):
     return render_template('new-exercise.html', title = "Add Exercise", form = form)
 
 
-# Add exercise 3? from DB
+# Route to a WTForms instance to add an exercise to any day of the week.
 @app.route("/workouts/<exercise_name>/<difficulty>/add-exercise3")
 @login_required
 def add_exercise3(exercise_name, difficulty):
@@ -243,7 +246,7 @@ def add_exercise3(exercise_name, difficulty):
     return render_template('new-exercise.html', title = "Add Exercise", form = form)
 
 
-#
+# Route to a WTForms instance to edit a selected exercise in a selected DAY's workout, where the previous page was .
 @app.route("/workouts/<day>/<exercise_id>/edit-exercise1", methods = ['GET', 'POST'])
 @login_required
 def edit_exercise1(day, exercise_id):
@@ -279,7 +282,7 @@ def edit_exercise1(day, exercise_id):
     return render_template('new-exercise.html', title = "Add Exercise", form = form)
 
 
-#
+# Route to a WTForms instance to edit a selected exercise in a selected DAY's workout, where the previous page was .
 @app.route("/workouts/<day>/<exercise_id>/edit-exercise2", methods = ['GET', 'POST'])
 @login_required
 def edit_exercise2(day, exercise_id):
@@ -315,7 +318,7 @@ def edit_exercise2(day, exercise_id):
     return render_template('new-exercise.html', title = "Add Exercise", form = form)
 
 
-#
+# Route to the main PlateMath exercises database.
 @app.route("/workouts/database")
 @login_required
 def exercise_db():
@@ -325,28 +328,28 @@ def exercise_db():
     return render_template('exercise-db.html', title = "Exercise Database", today = today)
 
 
-#
+# Route to the PlateMath exercises database for leg workouts, page 1.
 @app.route("/workouts/database/legs1")
 @login_required
 def exercise_db_legs1():
     today = datetime.today().strftime("%A")
 
-
     return render_template('exercise-db-legs1.html', title = "Exercise Database: Legs", today = today)
 
 
-#
+# Route to the PlateMath exercises database for leg workouts, page 2.
 @app.route("/workouts/database/legs2")
 @login_required
 def exercise_db_legs2():
     today = datetime.today().strftime("%A")
 
-
     return render_template('exercise-db-legs2.html', title = "Exercise Database: Legs", today = today)
+
 
 ### Routes and functions to do with the nutrition page. ###
 
-"""."""
+"""Return an integer for the remaining macros for a selected day. The selected day has user-set MACROS numbers, 
+   and TODAYS_MEALS contains the macros eaten so far today."""
 def get_remaining_macros(macros, todays_meals):
     remaining_macros = [macros.protein - sum([x.protein for x in todays_meals]),
                         macros.carbs - sum([x.carbs for x in todays_meals]),
@@ -376,7 +379,7 @@ def nutrition():
         return render_template('nutrition.html', title = 'Nutrition', today = datetime.today())
 
 
-#
+# Route to a WTForms instance for setting or editing TODAY's macros (by datetime).
 @app.route("/nutrition/set-macros/today", methods = ['GET', 'POST'])
 @login_required
 def set_macros():
@@ -419,7 +422,7 @@ def set_macros():
     return render_template('set-macros.html', title = "Set Macros", form = form)
 
 
-#
+# Route to a WTForms instance for setting or editing any WEEKDAY's macros.
 @app.route("/nutrition/set-macros/<weekday>", methods = ['GET', 'POST'])
 @login_required
 def set_macros2(weekday):
@@ -462,7 +465,7 @@ def set_macros2(weekday):
     return render_template('set-macros.html', title = "Set Macros", form = form)
 
 
-#
+# Route to a webpage that displays the macros for all 7 days of the week.
 @app.route("/nutrition/view-macros")
 @login_required
 def view_macros():
@@ -471,8 +474,7 @@ def view_macros():
     return render_template('view-macros.html', title = "View Macros", macros = macros)
 
 
-
-#
+# Route to a WTForms instance for adding a new meal, where the previous page was .
 @app.route("/nutrition/new-meal", methods = ['GET', 'POST'])
 @login_required
 def new_meal1():
@@ -493,7 +495,7 @@ def new_meal1():
     return render_template('new-meal.html', title = "New Meal", form = form)
 
 
-#
+# Route to a WTForms instance for adding a new meal, where the previous page was .
 @app.route("/nutrition/meal-log/new-meal", methods = ['GET', 'POST'])
 @login_required
 def new_meal2():
@@ -514,7 +516,7 @@ def new_meal2():
     return render_template('new-meal.html', title = "New Meal", form = form)
 
 
-#
+# Route to the user's meal log, a webpage that contains data about all meals eaten today (by datetime).
 @app.route("/nutrition/meal-log")
 @login_required
 def meal_log():
@@ -529,7 +531,7 @@ def meal_log():
         today = datetime.today())
 
 
-#
+# Route to a WTForms instance for editing the data for a meal with MEAL_ID.
 @app.route("/nutrition/meal-log/<int:meal_id>/update-meal", methods = ['GET', 'POST'])
 @login_required
 def update_meal(meal_id):
@@ -565,7 +567,7 @@ def update_meal(meal_id):
     return render_template('update-meal.html', title = "Edit Your Meal", form = form)
 
 
-#
+# Route for deleting all the data for a meal with MEAL_ID (and subsequently deleting the meal itself).
 @app.route("/nutrition/meal-log/<int:meal_id>/delete-meal", methods = ['GET'])
 @login_required
 def delete_meal(meal_id):
@@ -581,30 +583,34 @@ def delete_meal(meal_id):
     return redirect(url_for('meal_log'))
 
 
-#
+# Route to the PlateMath nutritional resources page.
 @app.route("/nutrition/nutrition-resources")
 @login_required
 def nutrition_resources():
     return render_template('nutr-res.html', title = "Nutrition Resources")
 
 
-
-
+# Route to the PlateMath nutritional resources page about macronutrients.
 @app.route("/nutrition/nutrition-resources/macros101")
 @login_required
 def nutr_res_macros():
     return render_template('nutr-res-macros.html', title = "Macros 101")
 
 
+### Routes and functions to do with the community page. ###
 
-#
+
+# Route to the user community page.
 @app.route("/community")
 def community():
     return render_template('community.html', title = 'Community')
 
 
+### Routes and functions to do with user creation, login, and management. ###
 
-#
+
+"""Initialize blank macros with temp. -1 values that triggers the webpage to prompt the newly-created user to
+   set their macros. By WTForms restrictions, these values can never be negative again."""
 def set_blank_macros(user_id):
     mon_macros = Macros(day = "Monday", protein = -1, carbs = -1, fat = -1, calories = -1, user_id = user_id)
     tu_macros = Macros(day = "Tuesday", protein = -1, carbs = -1, fat = -1, calories = -1, user_id = user_id)
@@ -623,7 +629,8 @@ def set_blank_macros(user_id):
     db.session.add(sun_macros)
 
 
-#
+"""Initialize blank workout schedules with temp. string values that triggers the webpage to prompt the newly-created user to
+   set their workouts for the week."""
 def set_blank_schedule(user_id):
     schedule1 = Schedule(day_of_week = "Monday", workout = "None Set.", user_id = user_id)
     schedule2 = Schedule(day_of_week = "Tuesday", workout = "None Set.", user_id = user_id)
@@ -642,7 +649,7 @@ def set_blank_schedule(user_id):
     db.session.add(schedule7)
 
 
-#
+# Route for a new user profile creation. This route finalizes new user registration from REGISTER (next route).
 @app.route("/profile-creation/<username>", methods = ['GET', 'POST'])
 def profile_creation(username):
     form = ProfileForm()
@@ -681,7 +688,8 @@ def profile_creation(username):
     return render_template('profile-creation.html', title = "Create Your Profile", form = form)
 
 
-#
+# Route for registering a new user. The data from this page gets saved to the current Flask session, and the new user is created
+# only if the user successfully completes PROFILE_CREATION (previous route).
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -710,7 +718,7 @@ def register():
     return render_template('register.html', title = 'Register', form = form)
 
 
-#
+# Route for existing user login.
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -734,7 +742,7 @@ def login():
     return render_template('login.html', title = 'Log In', form = form)
 
 
-#
+# Route for existing user logout.
 @app.route("/logout")
 def logout():
     logout_user()
@@ -744,7 +752,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-#
+# Route for displaying the current user's account and profile.
 @app.route("/account")
 @login_required
 def account():
@@ -753,7 +761,8 @@ def account():
     return render_template('account.html', title = 'Your Account', image_file = image_file)
 
 
-#
+"""Save the PICTURE filename to the User model, and copy the selected PICTURE to static/images. The user's profile picture will
+   then be changed to display the selected PICTURE."""
 def save_picture(picture):
     random_hex = secrets.token_hex(8)
     _, file_ext = os.path.splitext(picture.filename)
@@ -771,7 +780,7 @@ def save_picture(picture):
     return picture_filename
 
 
-#
+# Route for updating the current user's profile picture.
 @app.route("/account/update-profile-picture", methods = ['GET', 'POST'])
 @login_required
 def change_profile_image():
@@ -792,8 +801,7 @@ def change_profile_image():
     return render_template('update-profile-picture.html', title = 'Update Profile Picture', form = form)
 
 
-
-#
+# Route for updating the current user's email.
 @app.route("/account/update-user-email", methods = ['GET', 'POST'])
 @login_required
 def change_user():
@@ -816,7 +824,7 @@ def change_user():
     return render_template('update-user.html', title = 'Update Profile', form = form)
 
 
-#
+# Route for changing the current user's password.
 @app.route("/account/change-password", methods = ['GET', 'POST'])
 @login_required
 def change_password():
@@ -834,9 +842,4 @@ def change_password():
         return redirect(url_for('account'))
 
     return render_template('change-password.html', title = 'Change Password', form = form)
-
-
-
-
-
 

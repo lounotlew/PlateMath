@@ -1,7 +1,8 @@
-#
-# WTForms for user registration, login, profile creation,
-# Written by Lewis Kim.
-#
+########################################################################################
+# WTForms for user registration, login, profile creation, and user data entries/edits. #
+#                                                                                      #
+# Written by Lewis Kim.                                                                #
+########################################################################################
 
 from datetime import datetime
 from flask_wtf import FlaskForm
@@ -12,7 +13,7 @@ from wtforms.validators import DataRequired, InputRequired, Length, Email, Equal
 from main.models import User
 
 
-# A class for user registration using WTForms.
+# A WTForms instance for user registration.
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators = [DataRequired(), Length(min = 1, max = 20)])
 
@@ -26,14 +27,15 @@ class RegistrationForm(FlaskForm):
 
     submit = SubmitField('Sign Up')
 
-    #
+
+    """Check if the selected USERNAME already exists. If true, throw a validation error."""
     def validate_username(self, username):
         user = User.query.filter_by(username = username.data).first()
 
         if user:
             raise ValidationError('That username already exists. Please select another username.')
 
-    #
+    """Check if the selected EMAIL is already associated with an account. If true, throw a validation error."""
     def validate_email(self, email):
         user = User.query.filter_by(email = email.data).first()
 
@@ -41,8 +43,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('That email is already taken. Please select another email.')
 
 
-
-# A class for user login using WTForms.
+# A WTForms instance for user login.
 class LoginForm(FlaskForm):
     username = StringField('Username', validators = [DataRequired(), Length(min = 1, max = 20)])
 
@@ -53,7 +54,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Log In')
 
 
-#
+# A WTForms instance for adding a workout to a user's weekly schedule.
 class WorkoutForm(FlaskForm):
     workout = StringField("Workout (e.g. Chest Day, Cardio, Back and Biceps, Legs, etc.)", validators = [DataRequired()])
 
@@ -66,7 +67,7 @@ class WorkoutForm(FlaskForm):
     submit = SubmitField("Set Workout")
 
 
-#
+# A WTForms instance for adding or editing an exercise to/in a user's workout.
 class AddExerciseForm(FlaskForm):
     name = StringField("Exercise Name:", validators = [DataRequired()])
 
@@ -82,7 +83,8 @@ class AddExerciseForm(FlaskForm):
 
     submit = SubmitField("Submit")
 
-#
+
+# A WTForms instance for adding or editing macronutrient numbers to/in a user's nutritional profile.
 class MacroForm(FlaskForm):
     day = SelectField(u"Day of Week:", choices = [("Monday", "Monday"), ("Tuesday", "Tuesday"), ("Wednesday", "Wednesday"),
         ("Thursday", "Thursday"), ("Friday", "Friday"), ("Saturday", "Saturday"), ("Sunday", "Sunday")],
@@ -97,7 +99,7 @@ class MacroForm(FlaskForm):
     submit = SubmitField("Set Macros")
 
 
-#
+# A WTForms instance for adding or editing meal data to/in a user's nutritional profile.
 class MealForm(FlaskForm):
     description = StringField('Description of your meal:')
 
@@ -116,7 +118,7 @@ class MealForm(FlaskForm):
     update = SubmitField("Update My Meal")
 
 
-# A class for user profile creation using WTForms.
+# A WTForms instance for user profile creation.
 class ProfileForm(FlaskForm):
     weight = FloatField('What is your current weight (in lbs.)?', validators = [DataRequired(), NumberRange(min = 0)])
 
@@ -137,14 +139,14 @@ class ProfileForm(FlaskForm):
     submit = SubmitField('Save Profile')
 
 
-#
+# A WTForms instance for changing an existing user's profile picture.
 class ChangeProfilePicForm(FlaskForm):
     picture = FileField('Please select a picture (.jpg, .png, .gif).', validators = [FileAllowed(['jpg', 'png', 'jpeg', 'gif'])])
 
     submit = SubmitField('Update')
 
 
-# A class for updating your user profile using WTForms.
+# A WTForms instance for changing a user's username and/or email.
 class ChangeUserForm(FlaskForm):
     username = StringField('Username', validators = [DataRequired(), Length(min = 1, max = 20)])
 
@@ -153,7 +155,7 @@ class ChangeUserForm(FlaskForm):
     submit = SubmitField('Update')
 
 
-    #
+    """Check if the selected USERNAME already exists. If true, throw a validation error."""
     def validate_username(self, username):
         if username.data != current_user.username:
 
@@ -162,7 +164,7 @@ class ChangeUserForm(FlaskForm):
             if user:
                 raise ValidationError('That username already exists. Please select another username.')
 
-    #
+    """Check if the selected EMAIL is already associated with an account. If true, throw a validation error."""
     def validate_email(self, email):
         if email.data != current_user.email:
             user = User.query.filter_by(email = email.data).first()
@@ -171,18 +173,10 @@ class ChangeUserForm(FlaskForm):
                 raise ValidationError('That email is already taken. Please select another email.')
 
 
-#
+# A WTForms instance for changing an existing user's password.
 class ChangePasswordForm(FlaskForm):
     password = PasswordField('Password', validators = [DataRequired(), Length(min = 6)])
     confirm_password = PasswordField('Confirm Password', validators = [DataRequired(), Length(min = 6), EqualTo('password')])
 
     submit = SubmitField('Change Password')
-
-
-
-
-
-
-
-
 
