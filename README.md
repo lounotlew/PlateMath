@@ -19,7 +19,7 @@ Required packages:
 
 To preview this website, fork the PlateMath repository and type in the following command (in the correct directory):
 
-* The secret key in this repository is only a placeholder key.
+*The secret key in this repository is only a placeholder key.
 
 ```
 python3 run.py
